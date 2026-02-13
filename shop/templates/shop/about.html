@@ -170,6 +170,41 @@
         font-size: 1.2rem;
         color: #718096;
     }
+    
+    /* Responsive */
+    @media (max-width: 991.98px) {
+        .about-hero { padding: 50px 0; }
+        .about-hero h1 { font-size: 2.25rem; }
+        .about-hero .tagline { font-size: 1.2rem; }
+        .about-hero img { max-width: 280px; }
+        .story-section, .values-section, .team-section { padding: 40px 0; }
+        .stats-section { padding: 40px 0; }
+    }
+    @media (max-width: 767.98px) {
+        .about-hero { padding: 40px 0; }
+        .about-hero h1 { font-size: 1.8rem; }
+        .about-hero .tagline { font-size: 1rem; }
+        .about-hero img { max-width: 200px; margin-bottom: 20px; }
+        .value-card { padding: 20px; margin-bottom: 1rem; }
+        .value-icon { font-size: 2.25rem; margin-bottom: 12px; }
+        .value-card h4, .value-card h5 { font-size: 1.1rem; }
+        .stat-number { font-size: 2.25rem; }
+        .stat-label { font-size: 0.9rem; }
+        .contact-card { padding: 25px; }
+        .contact-card img { margin-bottom: 20px; padding: 10px; }
+        .section-title h2 { font-size: 1.75rem; }
+        .section-title p { font-size: 1rem; }
+        .story-section .lead { font-size: 1rem; }
+    }
+    @media (max-width: 575.98px) {
+        .about-hero h1 { font-size: 1.5rem; }
+        .about-hero img { max-width: 150px; }
+        .section-title { margin-bottom: 30px; }
+        .section-title h2 { font-size: 1.5rem; }
+        .contact-info-item { padding: 10px; }
+        .contact-info-item i { font-size: 1.2rem; margin-right: 10px; }
+        .contact-info-item a { font-size: 0.9rem; }
+    }
 </style>
 {% endblock %}
 

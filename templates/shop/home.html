@@ -584,24 +584,61 @@
     }
     
     /* Responsive */
-    @media (max-width: 768px) {
-        .hero-tagline {
-            font-size: 3rem;
-            letter-spacing: 2px;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.3rem;
-        }
-        
-        .btn-hero {
-            padding: 15px 35px;
-            font-size: 1rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-        }
+    @media (max-width: 991.98px) {
+        .hero-title-main { font-size: clamp(2rem, 6vw, 4rem); }
+        .hero-subtitle-modern { font-size: 1.15rem; }
+        .btn-hero { padding: 14px 30px; font-size: 0.95rem; }
+        .section-title h2 { font-size: 2rem; }
+        .features-section, .products-showcase, .services-section, .stats-section { padding: 60px 0; }
+        .feature-card { padding: 25px; }
+        .feature-icon { width: 65px; height: 65px; font-size: 2rem; }
+        .service-box { padding: 25px; }
+        .service-box h4 { font-size: 1.4rem; }
+    }
+    @media (max-width: 767.98px) {
+        .hero-modern { min-height: 80vh; }
+        .hero-title-main { font-size: clamp(1.75rem, 7vw, 3rem); }
+        .hero-subtitle-modern { font-size: 1rem; margin-bottom: 1.5rem; }
+        .hero-buttons-modern { gap: 0.75rem; }
+        .hero-buttons-modern .btn { padding: 0.6rem 1.25rem; font-size: 0.9rem; }
+        .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; padding-top: 2rem; }
+        .hero-stat-number { font-size: 1.8rem; }
+        .hero-stat-label { font-size: 0.75rem; }
+        .floating-element { display: none; }
+        .scroll-indicator { bottom: 1rem; }
+        .section-title h2 { font-size: 1.6rem; }
+        .section-title p { font-size: 1rem; }
+        .feature-card h4 { font-size: 1.2rem; }
+        .feature-card p { font-size: 0.9rem; }
+        .btn-hero { padding: 12px 25px; font-size: 0.9rem; letter-spacing: 1px; }
+        .service-box { padding: 20px; margin-bottom: 1rem; }
+        .service-box h4 { font-size: 1.2rem; }
+        .service-box p { font-size: 0.9rem; }
+        .btn-service { padding: 10px 25px; font-size: 0.9rem; }
+        .stat-box { padding: 15px; }
+        .stat-number { font-size: 2.5rem !important; }
+        .stat-label { font-size: 0.9rem; }
+        .product-image-wrapper { height: 180px; }
+        .product-image { height: 180px; }
+        .product-body { padding: 15px; }
+        .product-body h6 { font-size: 1rem; }
+        .price { font-size: 1.2rem; }
+        .btn-add-cart { padding: 8px 16px; font-size: 0.8rem; }
+    }
+    @media (max-width: 575.98px) {
+        .hero-modern { min-height: 70vh; }
+        .hero-content-modern { padding: 0 1rem; }
+        .hero-title-main { font-size: 1.75rem; }
+        .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .hero-stat-number { font-size: 1.5rem; }
+        .features-section, .products-showcase, .services-section, .stats-section { padding: 40px 0; }
+        .section-title { margin-bottom: 30px; }
+        .section-title h2 { font-size: 1.4rem; }
+        .section-title h2::after { width: 60px; height: 3px; bottom: -8px; }
+        .section-title p { font-size: 0.9rem; }
+        .product-footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+        .price { font-size: 1.1rem; }
+        .btn-add-cart { width: 100%; text-align: center; justify-content: center; padding: 8px 16px; }
     }
 </style>
 {% endblock %}
