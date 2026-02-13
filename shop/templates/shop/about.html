@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us | AURA FARMING{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .about-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+        background-size: cover;
+        opacity: 0.3;
+    }
+    
+    .about-hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .about-hero img {
+        max-width: 400px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+    
+    .about-hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .about-hero .tagline {
+        font-size: 1.5rem;
+        font-style: italic;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+    }
+    
+    .story-section {
+        padding: 60px 0;
+        background: #f8f9fa;
+    }
+    
+    .values-section {
+        padding: 60px 0;
+    }
+    
+    .value-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .value-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    
+    .value-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+    
+    .value-card h4 {
+        color: #10b981;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    
+    .contact-card {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    
+    .contact-card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        background: white;
+        padding: 20px;
+    }
+    
+    .contact-info-item {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .contact-info-item i {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        color: #ffd700;
+    }
+    
+    .contact-info-item a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+    
+    .contact-info-item a:hover {
+        color: #ffd700;
+    }
+    
+    .stats-section {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 60px 0;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+    
+    .team-section {
+        padding: 60px 0;
+        background: #f8f9fa;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 15px;
+    }
+    
+    .section-title p {
+        font-size: 1.2rem;
+        color: #718096;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="about-hero-content">
+        <img src="{% static 'images/aura-farming-logo.png' %}" alt="AURA FARMING Logo">
+        <h1>AURA FARMING</h1>
+        <p class="tagline">"Where Every Seed Tells a Story"</p>
+        <p class="lead">Bringing Nature Closer to Your Home</p>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="story-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-4">🌱 Our Story</h2>
+                <p class="lead">From a small balcony garden in Ahmedabad to helping thousands of Indians grow their own green spaces.</p>
+                <p>AURA FARMING was born from a simple belief: everyone deserves to experience the joy of growing their own plants, no matter how small their space.</p>
+                <p>We started with a passion for urban gardening and a mission to make it accessible to every household in India. Today, we offer a complete range of gardening tools, DIY kits, organic products, and professional services.</p>
+                <p>Our team of horticulture experts and passionate gardeners work together to curate the best products and provide personalized guidance to help you succeed in your gardening journey.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'images/aura-farming-card.png' %}" alt="AURA FARMING" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Values -->
+<section class="values-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>🌟 Our Core Values</h2>
+            <p>What We Stand For</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">🌿</div>
+                    <h4>Sustainability</h4>
+                    <p>We promote organic farming practices and eco-friendly products that are good for you and the planet.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">🎓</div>
+                    <h4>Education</h4>
+                    <p>We empower people with knowledge through workshops, guides, and personalized consultation services.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h4>Community</h4>
+                    <p>We build a community of gardening enthusiasts who share tips, experiences, and celebrate every harvest together.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">💚</div>
+                    <h4>Quality</h4>
+                    <p>Every product is carefully tested and selected to ensure it meets our high standards for durability and effectiveness.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h4>Innovation</h4>
+                    <p>We constantly explore new gardening techniques, tools, and solutions to make urban gardening easier and more rewarding.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <div class="value-icon">❤️</div>
+                    <h4>Passion</h4>
+                    <p>Our love for plants and nature drives everything we do, from product selection to customer service.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number">86+</div>
+                    <div class="stat-label">Premium Products</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Garden Setups</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Workshops Held</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="values-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>📞 Get In Touch</h2>
+            <p>We're Here to Help You Grow</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="contact-card">
+                    <img src="{% static 'images/aura-farming-card.png' %}" alt="Contact Card">
+                    
+                    <div class="contact-info-item">
+                        <i class="bi bi-telephone-fill"></i>
+                        <a href="tel:+918866080372">88660 80372</a>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <a href="mailto:aurafarming08@gmail.com">aurafarming08@gmail.com</a>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Ahmedabad, Gujarat, India</span>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <i class="bi bi-instagram"></i>
+                        <a href="https://instagram.com/aurafarming2425" target="_blank">@aurafarming2425</a>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-light btn-lg">
+                            🌱 Request a Consultation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What We Offer -->
+<section class="team-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>🛒 What We Offer</h2>
+            <p>Complete Gardening Solutions</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="value-card">
+                    <div class="value-icon">🔧</div>
+                    <h5>Gardening Tools</h5>
+                    <p>Premium quality tools and accessories for every gardening need.</p>
+                    <a href="{% url 'shop:product_list' %}" class="btn btn-outline-primary btn-sm mt-2">Browse Tools</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h5>DIY Growing Kits</h5>
+                    <p>Complete kits with everything you need to start growing today.</p>
+                    <a href="{% url 'shop:product_list' %}" class="btn btn-outline-primary btn-sm mt-2">View Kits</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="value-card">
+                    <div class="value-icon">🏡</div>
+                    <h5>Garden Setups</h5>
+                    <p>Professional setup services for residential and commercial spaces.</p>
+                    <a href="{% url 'shop:services' %}" class="btn btn-outline-primary btn-sm mt-2">View Services</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="value-card">
+                    <div class="value-icon">🎓</div>
+                    <h5>Workshops</h5>
+                    <p>Learn from experts through hands-on gardening workshops.</p>
+                    <a href="{% url 'shop:workshops' %}" class="btn btn-outline-primary btn-sm mt-2">Join Workshop</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="section-title h4 mb-4">Your Cart</h2>
+{% if items %}
+    <div class="table-responsive mb-4 animate-on-scroll">
+        <table class="table table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price (₹)</th>
+                    <th>Qty</th>
+                    <th>Total (₹)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>₹{{ item.product.price_inr }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.line_total }}</td>
+                        <td>
+                            <a href="{% url 'shop:remove_from_cart' item.product.id %}" class="btn btn-sm btn-outline-danger">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-bold">Total: ₹{{ total_amount }}</p>
+        <div>
+            <a href="{% url 'shop:product_list' %}" class="btn btn-outline-success me-2">Continue Shopping</a>
+            <a href="{% url 'shop:checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+    </div>
+{% else %}
+    <p>Your cart is empty.</p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-success">Browse Products</a>
+{% endif %}
+{% endblock %}

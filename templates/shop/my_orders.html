@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="h4 mb-4">My Orders</h2>
+{% if orders %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><a href="{% url 'shop:order_success' order.id %}" class="text-decoration-none">#{{ order.id }}</a></td>
+                        <td>{{ order.created_at|date:"d M Y" }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>₹{{ order.total_amount }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p>You have not placed any orders yet.</p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-success">Browse Products</a>
+{% endif %}
+{% endblock %}

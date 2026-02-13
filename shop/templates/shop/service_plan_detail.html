@@ -1,0 +1,527 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ plan.name }} - {{ plan.plan_code }} | AURA FARMING{% endblock %}
+
+{% block extra_css %}
+<style>
+    .plan-hero {
+        background: linear-gradient(135deg, rgba(15, 32, 39, 0.55) 0%, rgba(32, 58, 67, 0.55) 50%, rgba(44, 83, 100, 0.55) 100%),
+                    url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1600&q=80') center/cover;
+        color: white;
+        padding: 70px 0;
+        margin-bottom: 50px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .plan-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1));
+    }
+    
+    .plan-code-badge {
+        background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+        padding: 10px 25px;
+        border-radius: 30px;
+        display: inline-block;
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .plan-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    }
+    
+    .plan-hero .tagline {
+        font-size: 1.4rem;
+        opacity: 0.9;
+        margin-bottom: 25px;
+        font-weight: 300;
+    }
+    
+    .plan-hero .price {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin: 25px 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .specs-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        transition: all 0.4s ease;
+        cursor: pointer;
+    }
+    
+    .specs-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 28px rgba(16, 185, 129, 0.2);
+    }
+    
+    .specs-card h3 {
+        color: #10b981;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .specs-card:hover h3 {
+        transform: translateX(10px);
+    }
+    
+    .spec-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .spec-row:last-child {
+        border-bottom: none;
+    }
+    
+    .spec-label {
+        font-weight: 600;
+        color: #4a5568;
+    }
+    
+    .spec-value {
+        color: #718096;
+        text-align: right;
+    }
+    
+    .includes-section {
+        background: #f7fafc;
+        padding: 40px 0;
+        margin: 40px 0;
+    }
+    
+    .include-item {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        display: flex;
+        gap: 15px;
+        align-items: start;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .include-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .include-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 20px rgba(16, 185, 129, 0.15);
+    }
+    
+    .include-item:hover::before {
+        transform: scaleY(1);
+    }
+    
+    .include-icon {
+        font-size: 1.5rem;
+        min-width: 30px;
+        transition: transform 0.3s ease;
+    }
+    
+    .include-item:hover .include-icon {
+        transform: rotate(360deg) scale(1.2);
+    }
+    
+    .include-details h5 {
+        margin: 0 0 5px 0;
+        font-weight: 600;
+        color: #2d3748;
+    }
+    
+    .plant-tag, .ideal-tag {
+        background: linear-gradient(135deg, #e6f2ff 0%, #bee3f8 100%);
+        color: #667eea;
+        padding: 8px 15px;
+        border-radius: 20px;
+        margin: 5px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .plant-tag:hover, .ideal-tag:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        margin-right: 10px;
+    }
+    
+    .include-spec {
+        color: #718096;
+        font-size: 0.95rem;
+    }
+    
+    .plants-section, .ideal-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .plants-section h3, .ideal-section h3 {
+        color: #10b981;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .plant-tag, .ideal-tag {
+        display: inline-block;
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        color: #065f46;
+        padding: 8px 15px;
+        border-radius: 20px;
+        margin: 5px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .plant-tag:hover, .ideal-tag:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+    
+    .cta-box {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        margin: 40px 0;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .cta-box h3 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    
+    .btn-book-now {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 35px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    .btn-book-now::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: #f5576c;
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s;
+        z-index: -1;
+    }
+    
+    .btn-book-now:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .service-highlight-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .related-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .related-card:hover::before {
+        left: 100%;
+    }
+    
+    .related-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
+    }
+    
+    .related-card h5 {
+        color: #10b981;
+        margin-bottom: 10px;
+        transition: color 0.3s ease;
+    }
+    
+    .related-card:hover h5 {
+        color: #059669;
+    }
+    
+    .btn-book-now:active {
+        transform: scale(1.1) rotate(0deg)old;
+        font-size: 1.2rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-book-now:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        color: #f5576c;
+    }
+    
+    .related-plans {
+        margin-top: 60px;
+    }
+    
+    .related-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .related-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    
+    .related-card h5 {
+        color: #667eea;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="plan-hero">
+    <div class="container">
+        <span class="plan-code-badge">{{ plan.plan_code }}</span>
+        <h1>{{ plan.name }}</h1>
+        <p class="tagline">{{ plan.tagline }}</p>
+        {% if plan.price_max_inr %}
+        <div class="price">₹{{ plan.price_inr|floatformat:0 }} - ₹{{ plan.price_max_inr|floatformat:0 }}</div>
+        {% else %}
+        <div class="price">₹{{ plan.price_inr|floatformat:0 }}</div>
+        {% endif %}
+        <p>{{ plan.get_category_display }}</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Overview -->
+            <div class="specs-card">
+                <h3>📋 Plan Overview</h3>
+                <p>{{ plan.description }}</p>
+            </div>
+            
+            <!-- Key Specifications -->
+            {% if plan.space_coverage or plan.setup_time or plan.warranty %}
+            <div class="specs-card">
+                <h3>📐 Specifications</h3>
+                {% if plan.space_coverage %}
+                <div class="spec-row">
+                    <span class="spec-label">📏 Space Coverage</span>
+                    <span class="spec-value">{{ plan.space_coverage }}</span>
+                </div>
+                {% endif %}
+                {% if plan.setup_time %}
+                <div class="spec-row">
+                    <span class="spec-label">⏱️ Setup Time</span>
+                    <span class="spec-value">{{ plan.setup_time }}</span>
+                </div>
+                {% endif %}
+                {% if plan.warranty %}
+                <div class="spec-row">
+                    <span class="spec-label">✅ Warranty/Support</span>
+                    <span class="spec-value">{{ plan.warranty }}</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- What's Included -->
+            {% if plan.includes_json %}
+            <div class="includes-section">
+                <div class="container">
+                    <h2 class="text-center mb-4">📦 What's Included</h2>
+                    <div class="row">
+                        <div class="col-12">
+                            {% for item in plan.includes_json %}
+                            <div class="include-item">
+                                <div class="include-icon">✓</div>
+                                <div class="include-details">
+                                    <h5>
+                                        <span class="include-quantity">{{ item.quantity }}</span>
+                                        {{ item.item }}
+                                    </h5>
+                                    <p class="include-spec mb-0">{{ item.spec }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Suitable Plants -->
+            {% if plan.suitable_plants %}
+            <div class="plants-section">
+                <h3>🌱 Suitable Plants</h3>
+                <div>
+                    {% for plant in plan.suitable_plants.split|slice:":20" %}
+                    <span class="plant-tag">{{ plant|cut:"," }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Ideal For -->
+            {% if plan.ideal_for %}
+            <div class="ideal-section">
+                <h3>👥 Ideal For</h3>
+                <div>
+                    {% for item in plan.ideal_for.split|slice:":10" %}
+                    <span class="ideal-tag">{{ item|cut:"," }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Info Card -->
+            <div class="specs-card sticky-top" style="top: 100px;">
+                <h3>💰 Pricing</h3>
+                {% if plan.price_max_inr %}
+                <h2 class="text-primary">₹{{ plan.price_inr|floatformat:0 }} - ₹{{ plan.price_max_inr|floatformat:0 }}</h2>
+                {% else %}
+                <h2 class="text-primary">₹{{ plan.price_inr|floatformat:0 }}</h2>
+                {% endif %}
+                
+                <hr>
+                
+                <h5>📞 Contact Details</h5>
+                <p class="mb-2"><i class="bi bi-telephone"></i> 88660 80372</p>
+                <p class="mb-2"><i class="bi bi-envelope"></i> aurafarming08@gmail.com</p>
+                <p class="mb-3"><i class="bi bi-geo-alt"></i> Ahmedabad</p>
+                
+                <a href="{% url 'shop:service_request' %}" class="btn btn-primary w-100 btn-lg">
+                    📝 Request Consultation
+                </a>
+                
+                <a href="tel:+918866080372" class="btn btn-outline-success w-100 mt-3">
+                    📞 Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="cta-box">
+        <h3>Ready to Get Started?</h3>
+        <p class="lead mb-4">Book your consultation today and transform your space into a green paradise!</p>
+        <a href="{% url 'shop:service_request' %}" class="btn btn-book-now">
+            🌱 Book This Plan Now
+        </a>
+    </div>
+    
+    <!-- Related Plans -->
+    {% if related_plans %}
+    <div class="related-plans">
+        <h2 class="text-center mb-4">Similar Plans You Might Like</h2>
+        <div class="row g-4">
+            {% for related in related_plans %}
+            <div class="col-md-4">
+                <div class="related-card">
+                    <span class="badge bg-primary mb-2">{{ related.plan_code }}</span>
+                    <h5>{{ related.name }}</h5>
+                    <p class="text-muted">{{ related.tagline|truncatewords:10 }}</p>
+                    {% if related.price_max_inr %}
+                    <h4 class="text-success">₹{{ related.price_inr|floatformat:0 }} - ₹{{ related.price_max_inr|floatformat:0 }}</h4>
+                    {% else %}
+                    <h4 class="text-success">₹{{ related.price_inr|floatformat:0 }}</h4>
+                    {% endif %}
+                    <a href="{% url 'shop:service_plan_detail' related.plan_code %}" class="btn btn-outline-primary btn-sm mt-2">
+                        View Details →
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Back to Services -->
+    <div class="text-center my-5">
+        <a href="{% url 'shop:services' %}" class="btn btn-lg btn-outline-secondary">
+            ← Back to All Services
+        </a>
+    </div>
+</div>
+
+{% endblock %}

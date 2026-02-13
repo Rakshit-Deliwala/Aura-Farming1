@@ -1,0 +1,1727 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Garden Services & Care Plans | AURA FARMING{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .maintenance-hero {
+        background: linear-gradient(135deg, rgba(5, 65, 120, 0.55) 0%, rgba(8, 105, 150, 0.55) 30%, rgba(5, 150, 105, 0.55) 70%, rgba(4, 120, 87, 0.55) 100%),
+                    url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80') center/cover;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .maintenance-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 40%, rgba(251, 191, 36, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 60%, rgba(16, 185, 129, 0.15) 0%, transparent 45%),
+                    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+        animation: gentle-rotate 20s linear infinite;
+    }
+    
+    @keyframes gentle-rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .maintenance-hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(251, 191, 36, 0.4);
+        position: relative;
+        z-index: 10;
+        background: linear-gradient(135deg, #ffffff 0%, #fbbf24 50%, #ffffff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: title-glow 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes title-glow {
+        0% { text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(251, 191, 36, 0.3); }
+        100% { text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3), 0 0 50px rgba(251, 191, 36, 0.6); }
+    }
+    
+    .maintenance-hero p {
+        font-size: 1.25rem;
+        opacity: 0.95;
+        margin-bottom: 1rem;
+        font-weight: 300;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .maintenance-hero .lead {
+        font-size: 1rem;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Plan Comparison Styling */
+    .plan-comparison {
+        padding: var(--section-padding);
+        background: var(--gray-50);
+    }
+    
+    .tier-section {
+        margin-bottom: 5rem;
+    }
+    
+    .tier-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        padding-bottom: 2rem;
+    }
+    
+    .tier-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, var(--primary-green), transparent);
+        border-radius: 2px;
+    }
+    
+    .tier-header h2 {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+    }
+    
+    .tier-header p {
+        font-size: 1.125rem;
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    /* Plan Cards */
+    .plan-card {
+        background: white;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--gray-200);
+        transition: var(--transition);
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .plan-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-green);
+    }
+    
+    .plan-card.featured {
+        border: 2px solid var(--primary-green);
+        transform: scale(1.05);
+    }
+    
+    .plan-card.featured:hover {
+        transform: scale(1.05) translateY(-8px);
+    }
+    
+    .plan-card-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+    }
+    
+    .plan-card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .featured-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--accent-gold);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        z-index: 10;
+    }
+    
+    .billing-period h4 {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+    }
+    
+    .plan-price {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--gray-100);
+    }
+    
+    .plan-price .amount {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        display: block;
+    }
+    
+    .plan-price .period {
+        color: var(--gray-500);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    .savings-badge {
+        display: inline-block;
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    
+    .frequency-info {
+        background: var(--gray-50);
+        padding: 1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--gray-100);
+    }
+    
+    .frequency-info strong {
+        color: var(--gray-900);
+    }
+    
+    .response-time {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 500;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    
+    .service-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.5rem 0;
+        flex: 1;
+    }
+    
+    .service-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        transition: var(--transition);
+        gap: 1rem;
+        position: relative;
+    }
+    
+    .service-list li:hover {
+        background: var(--gray-50);
+    }
+    
+    .service-list li:hover .frequency-badge {
+        position: absolute;
+        left: 35%;
+        transform: translateX(-50%);
+        z-index: 10;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .service-list li:hover .service-content {
+        opacity: 0.3;
+    }
+    
+    .service-content {
+        display: flex;
+        align-items: center;
+        flex: 0 1 auto;
+        transition: opacity 0.3s ease;
+    }
+    
+    .service-icon {
+        width: 20px;
+        height: 20px;
+        background: var(--primary-green);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+    }
+    
+    .service-name {
+        color: var(--gray-700);
+        font-size: 0.875rem;
+    }
+    
+    .frequency-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        font-weight: 500;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .frequency-weekly {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+    }
+    
+    .frequency-monthly {
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--primary-green);
+    }
+    
+    .frequency-quarterly {
+        background: rgba(245, 158, 11, 0.1);
+        color: #d97706;
+    }
+    
+    .frequency-annual {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+    }
+    
+    .btn-subscribe {
+        width: 100%;
+        background: var(--primary-green);
+        color: white;
+        border: none;
+        padding: 0.875rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: auto;
+    }
+    
+    .btn-subscribe:hover {
+        background: var(--primary-green-dark);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+        color: white;
+        text-decoration: none;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(5, 65, 120, 0.55) 0%, rgba(5, 150, 105, 0.55) 50%, rgba(4, 120, 87, 0.55) 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+        background-size: cover;
+    }
+    
+    .cta-section h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .cta-section p {
+        font-size: 1.125rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .btn-cta {
+        background: white;
+        color: var(--primary-green);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .btn-cta:hover {
+        background: var(--gray-100);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        color: var(--primary-green);
+        text-decoration: none;
+    }
+    
+    /* Workshops Section */
+    .workshops-section {
+        padding: var(--section-padding);
+        background: white;
+    }
+    
+    .workshop-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--gray-200);
+        transition: var(--transition);
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .workshop-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .workshop-image {
+        height: 200px;
+        background: linear-gradient(135deg, rgba(5, 65, 120, 0.55) 0%, rgba(5, 150, 105, 0.55) 50%, rgba(16, 185, 129, 0.55) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .workshop-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 70%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+        opacity: 0.8;
+        animation: workshop-glow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes workshop-glow {
+        0% { opacity: 0.6; transform: scale(1); }
+        100% { opacity: 1; transform: scale(1.05); }
+    }
+    
+    .workshop-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .workshop-title {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: 0.75rem;
+    }
+    
+    .workshop-description {
+        color: var(--gray-600);
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        flex: 1;
+    }
+    
+    .workshop-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .workshop-detail {
+        text-align: center;
+        padding: 0.75rem 0.5rem;
+        background: var(--gray-50);
+        border-radius: 0.5rem;
+        border: 1px solid var(--gray-100);
+    }
+    
+    .workshop-detail-value {
+        font-weight: 600;
+        color: var(--primary-green);
+        font-size: 0.875rem;
+        display: block;
+    }
+    
+    .workshop-detail-label {
+        font-size: 0.75rem;
+        color: var(--gray-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--gray-100);
+        color: var(--gray-700);
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+    
+    .status-badge.available {
+        background: rgba(5, 150, 105, 0.1);
+        color: var(--primary-green);
+        border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+    
+    .status-badge.filling-fast {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .plan-card.featured {
+            transform: none;
+        }
+        
+        .workshop-details {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .tier-header {
+        color: #0f172a;
+        margin-bottom: 1rem;
+        display: inline-block;
+        letter-spacing: -0.5px;
+    }
+    
+    .tier-header p {
+        font-size: 1.3rem;
+        color: #64748b;
+        font-weight: 400;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .plan-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid #f1f5f9;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .plan-card-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 20px 20px 0 0;
+        transition: transform 0.6s ease;
+    }
+    
+    .plan-card:hover .plan-card-image {
+        transform: scale(1.08);
+    }
+    
+    .plan-card-content {
+        padding: 35px;
+    }
+    
+    .plan-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #10b981, #059669);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+    
+    .plan-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    .plan-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.05), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .plan-card:hover::after {
+        left: 100%;
+    }
+    
+    .plan-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px rgba(16, 185, 129, 0.15), 0 5px 15px rgba(0,0,0,0.1);
+        border-color: #10b981;
+    }
+    
+    .plan-card:active {
+        transform: translateY(-8px);
+    }
+    
+    .plan-card.featured {
+        border-color: #10b981;
+        border-width: 3px;
+        position: relative;
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2), 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .featured-badge {
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        padding: 8px 45px;
+        font-weight: 900;
+        font-size: 0.85rem;
+        transform: rotate(45deg);
+        z-index: 10;
+        box-shadow: 0 4px 12px rgba(20, 184, 166, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .billing-period {
+        text-align: center;
+        margin-bottom: 25px;
+        padding: 15px 20px;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border-radius: 12px;
+        border: 2px solid #10b981;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .billing-period::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+    
+    .billing-period h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #065f46;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .plan-price {
+        text-align: center;
+        margin: 30px 0;
+        padding: 25px;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 15px;
+        border: 2px solid #e2e8f0;
+    }
+    
+    .plan-price .amount {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #0f172a;
+        line-height: 1;
+        letter-spacing: -1px;
+    }
+    
+    .plan-price .amount::before {
+        content: '₹';
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #10b981;
+        margin-right: 5px;
+    }
+    
+    .plan-price .period {
+        color: #64748b;
+        font-size: 1.1rem;
+        margin-top: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .savings-badge {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 30px;
+        display: inline-block;
+        font-weight: 800;
+        margin-top: 12px;
+        font-size: 1rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: bounce 1s ease infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+    .service-list {
+        margin: 30px 0;
+        padding: 25px;
+        background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
+        border-radius: 15px;
+        border: 2px solid #e9ecef;
+    }
+    
+    .service-list h5 {
+        color: #0f172a;
+        font-weight: 800;
+        margin-bottom: 20px;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 3px solid #10b981;
+        padding-bottom: 12px;
+    }
+    
+    .service-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .service-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        margin-bottom: 12px;
+        background: white;
+        border-radius: 10px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid transparent;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    
+    .service-list li:hover {
+        transform: translateX(10px);
+        border-color: #10b981;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        box-shadow: 0 8px 16px rgba(16, 185, 129, 0.15);
+    }
+    
+    .service-list li:last-child {
+        margin-bottom: 0;
+    }
+    
+    .service-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+    }
+    
+    .service-icon {
+        width: 38px;
+        height: 38px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+    
+    .service-list li:hover .service-icon {
+        transform: rotate(360deg) scale(1.15);
+        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
+    }
+    
+    .service-name {
+        font-weight: 700;
+        color: #1e293b;
+        font-size: 1.05rem;
+        letter-spacing: 0.3px;
+    }
+    
+    .frequency-badge {
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-size: 0.90rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        white-space: nowrap;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .service-list li:hover .frequency-badge {
+        transform: scale(1.1);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+    
+    .frequency-badge.frequency-weekly {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-color: #047857;
+    }
+    
+    .frequency-badge.frequency-monthly {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        border-color: #0f766e;
+    }
+    
+    .frequency-badge.frequency-quarterly {
+        background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        color: white;
+        border-color: #155e75;
+    }
+    
+    .frequency-badge.frequency-annual {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        color: white;
+        border-color: #065f46;
+    }
+    
+    .frequency-info {
+        background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+        padding: 20px;
+        border-radius: 12px;
+        margin: 25px 0;
+        border-left: 4px solid #14b8a6;
+        box-shadow: 0 2px 8px rgba(20, 184, 166, 0.1);
+    }
+    
+    .frequency-info strong {
+        color: #115e59;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .response-time {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        color: #065f46;
+        padding: 15px 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 700;
+        margin: 20px 0;
+        border-left: 4px solid #059669;
+        font-size: 1.05rem;
+        box-shadow: 0 2px 8px rgba(5, 150, 105, 0.1);
+    }
+    
+    .btn-subscribe {
+        width: 100%;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 18px 30px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 1.15rem;
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-subscribe::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+        z-index: -1;
+    }
+    
+    .btn-subscribe:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+        color: white;
+    }
+    
+    .btn-subscribe:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .btn-subscribe:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .comparison-table {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-top: 60px;
+    }
+    
+    .comparison-table h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2d3748;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white;
+    }
+    
+    .table th {
+        border: none;
+        padding: 15px;
+    }
+    
+    .table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #10b981, #14b8a6, #0891b2, #059669, #10b981);
+        background-size: 200% 100%;
+        animation: gradient-shift 4s linear infinite;
+    }
+    
+    @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+    }
+    
+    .cta-section::after {
+        content: '🌱';
+        position: absolute;
+        bottom: -50px;
+        right: -50px;
+        font-size: 20rem;
+        opacity: 0.03;
+        transform: rotate(25deg);
+    }
+    
+    .cta-section h2 {
+        font-size: 3.5rem;
+        margin-bottom: 30px;
+        font-weight: 900;
+        position: relative;
+        z-index: 1;
+        text-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+        letter-spacing: -1px;
+    }
+    
+    .cta-section p {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+        font-weight: 300;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .btn-cta {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 22px 60px;
+        font-size: 1.3rem;
+        border-radius: 50px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 800;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        border: 3px solid #10b981;
+    }
+    
+    .btn-cta::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .btn-cta:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 50px rgba(16, 185, 129, 0.6);
+        letter-spacing: 3px;
+        color: white;
+    }
+    
+    .btn-cta:hover::before {
+        left: 100%;
+    }
+    
+    .btn-cta:active {
+        transform: translateY(-3px) scale(1.02);
+    }
+    
+    /* Fade-in animations */
+    .plan-card {
+        opacity: 0;
+        animation: fadeInScale 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+    
+    .plan-card:nth-child(1) { animation-delay: 0.1s; }
+    .plan-card:nth-child(2) { animation-delay: 0.2s; }
+    .plan-card:nth-child(3) { animation-delay: 0.3s; }
+    
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="maintenance-hero">
+    <div class="container">
+        <h1>🌿 Garden Maintenance Plans</h1>
+        <p>Keep Your Garden Thriving All Year Round</p>
+        <p class="lead">Choose from Monthly, Quarterly, or Annual Plans</p>
+    </div>
+</section>
+
+<!-- Plan Comparison Section -->
+<section class="plan-comparison">
+    <div class="container">
+        
+        <!-- Basic Care -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h2>🌱 Basic Care</h2>
+                <p>Essential maintenance for small gardens and balconies</p>
+            </div>
+            
+            <div class="row g-4">
+                {% for plan in basic_plans %}
+                <div class="col-md-4">
+                    <div class="plan-card {% if plan.billing_period == 'quarterly' %}featured{% endif %}">
+                        {% if plan.billing_period == 'monthly' %}
+                        <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800&q=80" alt="Watering Plants - Basic Care" class="plan-card-image">
+                        {% elif plan.billing_period == 'quarterly' %}
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Garden Pruning - Best Value" class="plan-card-image">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80" alt="Complete Garden Care" class="plan-card-image">
+                        {% endif %}
+                        <div class="plan-card-content">
+                        {% if plan.billing_period == 'quarterly' %}
+                        <span class="featured-badge">⭐ BEST VALUE</span>
+                        {% endif %}
+                        
+                        <div class="billing-period">
+                            <h4>{{ plan.get_billing_period_display }}</h4>
+                        </div>
+                        
+                        <div class="plan-price">
+                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="period">per {{ plan.billing_period }}</div>
+                            {% if plan.savings_percentage > 0 %}
+                            <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="frequency-info">
+                            <strong>Visit Frequency:</strong>
+                            {{ plan.visit_frequency }}
+                        </div>
+                        
+                        <div class="response-time">
+                            🚨 {{ plan.response_time }}
+                        </div>
+                        
+                        <ul class="service-list">
+                            {% if plan.services_json %}
+                                {% for service in plan.services_json %}
+                                <li>
+                                    <div class="service-content">
+                                        <div class="service-icon">✓</div>
+                                        <span class="service-name">{{ service.service }}</span>
+                                    </div>
+                                    {% if service.frequency == 'Weekly' %}
+                                        <span class="frequency-badge frequency-weekly">⏱️ {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Monthly' %}
+                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Quarterly' %}
+                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Annual' %}
+                                        <span class="frequency-badge frequency-annual">🗓️ {{ service.frequency }}</span>
+                                    {% else %}
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-subscribe">
+                            Subscribe Now
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Comprehensive Care -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h2>🌳 Comprehensive Care</h2>
+                <p>Complete maintenance for medium gardens and terraces</p>
+            </div>
+            
+            <div class="row g-4">
+                {% for plan in comprehensive_plans %}
+                <div class="col-md-4">
+                    <div class="plan-card {% if plan.billing_period == 'quarterly' %}featured{% endif %}">
+                        {% if plan.billing_period == 'monthly' %}
+                        <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?w=800&q=80" alt="Seasonal Planting" class="plan-card-image">
+                        {% elif plan.billing_period == 'quarterly' %}
+                        <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80" alt="Advanced Garden Maintenance" class="plan-card-image">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=800&q=80" alt="Professional Garden Service" class="plan-card-image">
+                        {% endif %}
+                        <div class="plan-card-content">
+                        {% if plan.billing_period == 'quarterly' %}
+                        <span class="featured-badge">⭐ BEST VALUE</span>
+                        {% endif %}
+                        
+                        <div class="billing-period">
+                            <h4>{{ plan.get_billing_period_display }}</h4>
+                        </div>
+                        
+                        <div class="plan-price">
+                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="period">per {{ plan.billing_period }}</div>
+                            {% if plan.savings_percentage > 0 %}
+                            <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="frequency-info">
+                            <strong>Visit Frequency:</strong>
+                            {{ plan.visit_frequency }}
+                        </div>
+                        
+                        <div class="response-time">
+                            🚨 {{ plan.response_time }}
+                        </div>
+                        
+                        <ul class="service-list">
+                            {% if plan.services_json %}
+                                {% for service in plan.services_json %}
+                                <li>
+                                    <div class="service-content">
+                                        <div class="service-icon">✓</div>
+                                        <span class="service-name">{{ service.service }}</span>
+                                    </div>
+                                    {% if service.frequency == 'Weekly' %}
+                                        <span class="frequency-badge frequency-weekly">⏱️ {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Monthly' %}
+                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Quarterly' %}
+                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Annual' %}
+                                        <span class="frequency-badge frequency-annual">🗓️ {{ service.frequency }}</span>
+                                    {% else %}
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-subscribe">
+                            Subscribe Now
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Corporate Care -->
+        <div class="tier-section">
+            <div class="tier-header">
+                <h2>🏢 Corporate Care</h2>
+                <p>Professional maintenance for offices and commercial spaces</p>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                {% for plan in corporate_plans %}
+                <div class="col-md-6">
+                    <div class="plan-card {% if plan.billing_period == 'annual' %}featured{% endif %}">
+                        {% if plan.billing_period == 'quarterly' %}
+                        <img src="https://images.unsplash.com/photo-1599629954294-c7d4c8c58653?w=800&q=80" alt="Office Interior Plants" class="plan-card-image">
+                        {% else %}
+                        <img src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?w=800&q=80" alt="Commercial Green Space" class="plan-card-image">
+                        {% endif %}
+                        <div class="plan-card-content">
+                        {% if plan.billing_period == 'annual' %}
+                        <span class="featured-badge">⭐ RECOMMENDED</span>
+                        {% endif %}
+                        
+                        <div class="billing-period">
+                            <h4>{{ plan.get_billing_period_display }}</h4>
+                        </div>
+                        
+                        <div class="plan-price">
+                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="period">per {{ plan.billing_period }}</div>
+                            {% if plan.savings_percentage > 0 %}
+                            <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="frequency-info">
+                            <strong>Visit Frequency:</strong>
+                            {{ plan.visit_frequency }}
+                        </div>
+                        
+                        <div class="response-time">
+                            🚨 {{ plan.response_time }}
+                        </div>
+                        
+                        <ul class="service-list">
+                            {% if plan.services_json %}
+                                {% for service in plan.services_json %}
+                                <li>
+                                    <div class="service-content">
+                                        <div class="service-icon">✓</div>
+                                        <span class="service-name">{{ service.service }}</span>
+                                    </div>
+                                    {% if service.frequency == 'Weekly' %}
+                                        <span class="frequency-badge frequency-weekly">⏱️ {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Monthly' %}
+                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Quarterly' %}
+                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                    {% elif service.frequency == 'Annual' %}
+                                        <span class="frequency-badge frequency-annual">🗓️ {{ service.frequency }}</span>
+                                    {% else %}
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-subscribe">
+                            Subscribe Now
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Need a Custom Maintenance Plan?</h2>
+        <p class="lead mb-4">We can create a tailored maintenance solution for your unique requirements</p>
+        <a href="{% url 'shop:service_request' %}" class="btn btn-cta">
+            📞 Request Custom Quote
+        </a>
+    </div>
+</section>
+
+<!-- Workshops Section -->
+<section class="workshops-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Workshops & Events</h2>
+            <p class="section-subtitle">Learn hands-on gardening skills from our expert instructors. Perfect for beginners and experienced gardeners alike.</p>
+        </div>
+        
+        <div class="row g-4 mt-4">
+            {% for workshop in hobby_workshops %}
+            <div class="col-lg-6 col-md-6">
+                <div class="workshop-card">
+                    <!-- Workshop Image with Icon based on name -->
+                    <div class="workshop-image">
+                        {% if 'Kitchen' in workshop.name %}
+                            🌱
+                        {% elif 'Terrace' in workshop.name %}
+                            🏠
+                        {% elif 'Pest' in workshop.name or 'Organic' in workshop.name %}
+                            🛡️
+                        {% elif 'Bonsai' in workshop.name %}
+                            🌳
+                        {% else %}
+                            🌿
+                        {% endif %}
+                    </div>
+                    <div class="workshop-content">
+                        <div class="status-badge available">
+                            <span style="width: 6px; height: 6px; background: currentColor; border-radius: 50%;"></span>
+                            Available Seats
+                        </div>
+                        <h3 class="workshop-title">{{ workshop.name }}</h3>
+                        <p class="workshop-description">{{ workshop.description|truncatewords:20 }}</p>
+                        
+                        <div class="workshop-details">
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">₹{{ workshop.price_per_person|floatformat:0 }}</span>
+                                <span class="workshop-detail-label">Per Person</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">{{ workshop.duration_hours }}h</span>
+                                <span class="workshop-detail-label">Duration</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">{{ workshop.min_participants }}-{{ workshop.max_participants }}</span>
+                                <span class="workshop-detail-label">Participants</span>
+                            </div>
+                        </div>
+                        
+                        <a href="{% url 'shop:workshops' %}" class="btn btn-subscribe">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Fallback static workshops if no database entries -->
+            <div class="col-lg-6 col-md-6">
+                <div class="workshop-card">
+                    <div class="workshop-image">🌱</div>
+                    <div class="workshop-content">
+                        <div class="status-badge available">
+                            <span style="width: 6px; height: 6px; background: currentColor; border-radius: 50%;"></span>
+                            Available Seats
+                        </div>
+                        <h3 class="workshop-title">Kitchen Gardening 101</h3>
+                        <p class="workshop-description">Learn to grow fresh herbs and vegetables in your kitchen space. Perfect for beginners who want to start their gardening journey.</p>
+                        <div class="workshop-details">
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">₹1,200</span>
+                                <span class="workshop-detail-label">Per Person</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">2h</span>
+                                <span class="workshop-detail-label">Duration</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">10-20</span>
+                                <span class="workshop-detail-label">Participants</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'shop:workshops' %}" class="btn btn-subscribe">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6">
+                <div class="workshop-card">
+                    <div class="workshop-image">🏠</div>
+                    <div class="workshop-content">
+                        <div class="status-badge available">
+                            <span style="width: 6px; height: 6px; background: currentColor; border-radius: 50%;"></span>
+                            Available Seats
+                        </div>
+                        <h3 class="workshop-title">Terrace Garden Planning</h3>
+                        <p class="workshop-description">Design and set up a beautiful terrace garden. Learn about plant selection, container gardening, and space optimization.</p>
+                        <div class="workshop-details">
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">₹1,800</span>
+                                <span class="workshop-detail-label">Per Person</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">3h</span>
+                                <span class="workshop-detail-label">Duration</span>
+                            </div>
+                            <div class="workshop-detail">
+                                <span class="workshop-detail-value">8-15</span>
+                                <span class="workshop-detail-label">Participants</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'shop:workshops' %}" class="btn btn-subscribe">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{% url 'shop:workshops' %}" class="btn btn-outline-primary" style="padding: 0.875rem 2rem;">
+                View All Workshops
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Back to Services -->
+<div class="container my-5">
+    <div class="text-center">
+        <a href="{% url 'shop:services' %}" class="btn btn-lg btn-outline-secondary">
+            ← Back to All Services
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Enhanced interactive effects for maintenance plans page
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate cards on scroll with staggered timing
+    const cards = document.querySelectorAll('.plan-card, .workshop-card');
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const cardObserver = new IntersectionObserver(function(entries) {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(30px)';
+                entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100); // Staggered animation
+            }
+        });
+    }, observerOptions);
+    
+    cards.forEach(card => {
+        cardObserver.observe(card);
+    });
+    
+    // Enhanced plan card click effects
+    document.querySelectorAll('.plan-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') return;
+            
+            // Add pulse effect
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            // Highlight the subscribe button with glow
+            const btn = this.querySelector('.btn-subscribe');
+            if (btn) {
+                btn.style.boxShadow = '0 0 20px rgba(5, 150, 105, 0.5)';
+                btn.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    btn.style.boxShadow = '';
+                    btn.style.transform = '';
+                }, 500);
+            }
+        });
+    });
+    
+    // Service list item interactive effects
+    document.querySelectorAll('.service-list li').forEach(item => {
+        item.addEventListener('click', function() {
+            // Add check animation
+            const icon = this.querySelector('.service-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.3)';
+                icon.style.background = 'var(--accent-gold)';
+                setTimeout(() => {
+                    icon.style.transform = 'scale(1)';
+                    icon.style.background = 'var(--primary-green)';
+                }, 200);
+            }
+            
+            // Add ripple effect
+            this.style.background = 'rgba(5, 150, 105, 0.1)';
+            setTimeout(() => {
+                this.style.background = '';
+            }, 300);
+        });
+    });
+    
+    // Workshop card hover effects
+    document.querySelectorAll('.workshop-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const image = this.querySelector('.workshop-image');
+            if (image) {
+                image.style.transform = 'scale(1.05)';
+                image.style.filter = 'brightness(1.1)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const image = this.querySelector('.workshop-image');
+            if (image) {
+                image.style.transform = 'scale(1)';
+                image.style.filter = 'brightness(1)';
+            }
+        });
+    });
+    
+    // Button enhancement effects
+    document.querySelectorAll('.btn-subscribe, .btn-cta').forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+            this.style.boxShadow = '0 8px 25px rgba(5, 150, 105, 0.3)';
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+        });
+        
+        // Add click ripple effect
+        btn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - (size / 2);
+            const y = e.clientY - rect.top - (size / 2);
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Add smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Featured badge animation
+    document.querySelectorAll('.featured-badge').forEach(badge => {
+        badge.style.animation = 'float 3s ease-in-out infinite';
+    });
+    
+    // Price counter animation on page load
+    setTimeout(() => {
+        document.querySelectorAll('.plan-price .amount').forEach((price, index) => {
+            const finalValue = price.textContent.replace(/[^\d]/g, '');
+            if (finalValue) {
+                const numericValue = parseInt(finalValue);
+                let current = 0;
+                const increment = Math.ceil(numericValue / 30);
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        current = numericValue;
+                        clearInterval(timer);
+                    }
+                    price.textContent = '₹' + current.toLocaleString();
+                }, 50);
+            }
+        });
+    }, 500);
+});
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

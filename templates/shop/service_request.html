@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2 class="h3 mb-3 text-success">🌱 Garden Setup & Services</h2>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Our Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🏡 <strong>Full Balcony/Terrace Setup:</strong> Complete garden setup for beginners with soil, plants, and tools</li>
+                        <li class="mb-2">🛠️ <strong>Kit Setup Support:</strong> Help with DIY kit installation and maintenance guidance</li>
+                        <li class="mb-2">🎁 <strong>Corporate Gifting:</strong> Bulk orders and customized plant gifts for companies</li>
+                        <li class="mb-2">🌿 <strong>Custom Projects:</strong> Vertical gardens, terrace farming, organic setups</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Request a Service</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'shop:service_request' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                {{ form.name }}
+                                {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">City <span class="text-danger">*</span></label>
+                                {{ form.city }}
+                                {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Service Type <span class="text-danger">*</span></label>
+                                {{ form.service_type }}
+                                {% if form.service_type.errors %}<div class="text-danger small">{{ form.service_type.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Budget Range</label>
+                                {{ form.budget }}
+                                <small class="text-muted d-block">Optional - helps us recommend suitable options</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Area Size</label>
+                                {{ form.area_size }}
+                                <small class="text-muted d-block">Approximate area for garden setup</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Preferred Date</label>
+                                {{ form.preferred_date }}
+                                <small class="text-muted d-block">{{ form.preferred_date.help_text }}</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Address</label>
+                                {{ form.address }}
+                                <small class="text-muted d-block">{{ form.address.help_text }}</small>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Additional Details</label>
+                                {{ form.message }}
+                                {% if form.message.errors %}<div class="text-danger small">{{ form.message.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'shop:home' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success btn-lg px-5">Submit Request 📧</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">📞 Contact Us</h5>
+                    <p class="mb-2"><strong>Phone:</strong><br>+91 98765 43210</p>
+                    <p class="mb-2"><strong>Email:</strong><br>support@aurafarming.com</p>
+                    <p class="mb-0"><strong>Working Hours:</strong><br>Mon-Sat: 9 AM - 7 PM</p>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-success">⭐ Why Choose Us?</h5>
+                    <ul class="small">
+                        <li>Expert consultation & on-site support</li>
+                        <li>100% organic products</li>
+                        <li>24-hour response guarantee</li>
+                        <li>Free setup guide with every kit</li>
+                        <li>Dedicated customer support</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success">💰 Service Packages</h5>
+                    <p class="small mb-2"><strong>Beginner Balcony Setup:</strong> ₹5,000 - ₹15,000</p>
+                    <p class="small mb-2"><strong>Terrace Garden:</strong> ₹15,000 - ₹50,000</p>
+                    <p class="small mb-2"><strong>Corporate Gifts:</strong> Starting at ₹999/unit</p>
+                    <p class="small mb-0"><strong>Custom Projects:</strong> Price on request</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,831 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gardening Workshops & Events | AURA FARMING{% endblock %}
+
+{% block extra_css %}
+<style>
+    .workshops-hero {
+        background: linear-gradient(135deg, rgba(15, 32, 39, 0.55) 0%, rgba(32, 58, 67, 0.55) 50%, rgba(44, 83, 100, 0.55) 100%),
+                    url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1600&q=80') center/cover;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .workshops-hero::after {
+        content: '🎓';
+        position: absolute;
+        top: 50%;
+        right: -50px;
+        font-size: 15rem;
+        opacity: 0.05;
+        transform: translateY(-50%) rotate(20deg);
+    }
+    
+    .workshops-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .workshops-hero p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .workshops-section {
+        padding: 60px 0;
+    }
+    
+    .workshops-section:nth-child(even) {
+        background: #f8f9fa;
+    }
+    
+    .category-header {
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+        padding-bottom: 30px;
+    }
+    
+    .category-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981, #059669);
+        border-radius: 2px;
+    }
+    
+    .category-header h2 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #1a202c;
+        margin-bottom: 0.8rem;
+    }
+    
+    .category-header p {
+        font-size: 1.2rem;
+        color: #718096;
+        font-weight: 300;
+    }
+    
+    .workshop-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        height: 100%;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .workshop-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .workshop-card:hover .workshop-image {
+        transform: scale(1.08);
+    }
+    
+    .workshop-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(245, 87, 108, 0.1) 70%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    .workshop-card:hover::before {
+        opacity: 1;
+    }
+    
+    .workshop-card:hover {
+        transform: translateY(-15px) rotateY(5deg);
+        box-shadow: 0 20px 40px rgba(245, 87, 108, 0.3);
+    }
+    
+    .workshop-card:active {
+        transform: translateY(-12px) rotateY(0deg);
+    }
+    
+    .workshop-header {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        color: white;
+        padding: 30px;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        text-align: center;
+    }
+    
+    .workshop-header::after {
+        content: '🎓';
+        position: absolute;
+        top: 50%;
+        right: -20px;
+        transform: translateY(-50%);
+        font-size: 120px;
+        opacity: 0.15;
+        transition: all 0.5s ease;
+    }
+    
+    .workshop-card:hover .workshop-header::after {
+        right: 15px;
+        opacity: 0.3;
+        transform: translateY(-50%) rotate(15deg) scale(1.1);
+    }
+    
+    .workshop-header.corporate {
+        background: linear-gradient(135deg, #5f72bd 0%, #9921e8 100%);
+    }
+    
+    .workshop-header.corporate::after {
+        content: '🏢';
+    }
+    
+    .workshop-header h3 {
+        font-size: 1.9rem;
+        margin-bottom: 0.8rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .workshop-duration {
+        font-size: 1rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .workshop-header h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .workshop-duration {
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+    
+    .workshop-body {
+        padding: 25px;
+    }
+    
+    .workshop-price {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 25px;
+        border: 2px solid #fbbf24;
+        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);
+    }
+    
+    .price-per-person {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: #92400e;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    }
+    
+    .workshop-body.corporate .price-per-person {
+        color: #5f72bd;
+    }
+    
+    .price-label {
+        color: #718096;
+        font-size: 0.95rem;
+        margin-top: 5px;
+    }
+    
+    .group-size {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+        border: 2px solid #60a5fa;
+    }
+    
+    .group-size:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.3);
+    }
+    
+    .group-size strong {
+        color: #1e3a8a;
+        font-size: 1.1rem;
+    }
+    
+    .workshop-description {
+        color: #4a5568;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+    
+    .workshop-details {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+    
+    .workshop-details li {
+        padding: 10px 0;
+        border-bottom: 1px4s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+    
+    .workshop-details li:hover {
+        padding-left: 10px;
+        background: rgba(245, 87, 108, 0.05);
+        border-radius: 5px;
+    }
+    
+    .workshop-details li:last-child {
+        border-bottom: none;
+    }
+    
+    .detail-icon {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .workshop-details li:hover .detail-icon {
+        transform: scale(1.3) rotate(10deg);
+    }
+    
+    .btn-book-workshop {
+        width: 100%;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-book-workshop::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+        z-index: -1;
+    }
+    
+    .btn-book-workshop.corporate {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    
+    .btn-book-workshop:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        color: white;
+        letter-spacing: 1px;
+    }
+    
+    .btn-book-workshop:hover::before {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .popular-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85rem;
+        z-index: 3;
+        animation: wiggle 1s ease-in-out infinite;
+    }
+    
+    @keyframes wiggle {
+        0%, 100% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(5deg);
+        }
+        75% {
+            transform: rotate(-5deg);
+        }
+    }
+    
+    .btn-book-workshop:active {
+        transform: translateY(-1px);
+    }
+    
+    .btn-book-workshop.corporate:hover {
+        box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-book-workshop.corporate:hover {
+        box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    }
+    
+    .popular-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #14b8a6;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.85rem;
+    }
+    
+    .benefits-section {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        margin-top: 60px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .benefits-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2d3748;
+    }
+    
+    .benefit-item {
+        display: flex;
+        align-items: start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .benefit-icon {
+        font-size: 2rem;
+        min-width: 50px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+        margin-top: 60px;
+    }
+    
+    .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .btn-cta {
+        background: white;
+        color: #48bb78;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-cta:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    
+    /* Fade-in animations */
+    .workshop-card {
+        opacity: 0;
+        animation: fadeInRotate 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInRotate {
+        from {
+            opacity: 0;
+            transform: translateY(30px) rotateX(-10deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+    }
+    
+    .workshop-card:nth-child(1) { animation-delay: 0.1s; }
+    .workshop-card:nth-child(2) { animation-delay: 0.2s; }
+    .workshop-card:nth-child(3) { animation-delay: 0.3s; }
+    .workshop-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    .benefit-item {
+        opacity: 0;
+        animation: slideInLeft 0.6s ease forwards;
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .benefit-item:nth-child(1) { animation-delay: 0.1s; }
+    .benefit-item:nth-child(2) { animation-delay: 0.2s; }
+    .benefit-item:nth-child(3) { animation-delay: 0.3s; }
+    
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="workshops-hero">
+    <div class="container">
+        <h1>🎓 Gardening Workshops & Events</h1>
+        <p>Learn, Grow, and Connect with Fellow Garden Enthusiasts</p>
+        <p class="lead">Hands-on Learning | Expert Guidance | Take-home Kits</p>
+    </div>
+</section>
+
+<!-- Hobby Workshops -->
+{% if hobby_workshops %}
+<section class="workshops-section">
+    <div class="container">
+        <div class="category-header">
+            <h2>🌸 Hobby Workshops</h2>
+            <p>Perfect for individuals and families who want to learn at their own pace</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for workshop in hobby_workshops %}
+            <div class="col-md-6 col-lg-4">
+                <div class="workshop-card">
+                    {% if 'Kitchen' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80" alt="Kitchen Gardening Vegetables" class="workshop-image">
+                    {% elif 'Terrace' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80" alt="Terrace Garden Planning" class="workshop-image">
+                    {% elif 'Pest Control' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80" alt="Organic Pest Control" class="workshop-image">
+                    {% elif 'Bonsai' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1596867990962-8a6d58460d4f?w=800&q=80" alt="Bonsai Making Workshop" class="workshop-image">
+                    {% elif 'Terrarium' in workshop.name %>
+                    <img src="https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=800&q=80" alt="Terrarium Creation" class="workshop-image">
+                    {% elif 'Kokedama' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80" alt="Kokedama Moss Ball" class="workshop-image">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80" alt="{{ workshop.name }}" class="workshop-image">
+                    {% endif %}
+                    <div class="workshop-header">
+                        {% if forloop.counter == 1 %}
+                        <span class="popular-badge">🔥 POPULAR</span>
+                        {% endif %}
+                        <h3>{{ workshop.name }}</h3>
+                        <div class="workshop-duration">⏱️ {{ workshop.duration }}</div>
+                    </div>
+                    <div class="workshop-body">
+                        <div class="workshop-price">
+                            <div class="price-per-person">₹{{ workshop.price_per_person|floatformat:0 }}</div>
+                            <div class="price-label">per person</div>
+                        </div>
+                        
+                        <div class="group-size">
+                            <strong>👥 Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
+                        </div>
+                        
+                        <p class="workshop-description">{{ workshop.description }}</p>
+                        
+                        <ul class="workshop-details">
+                            <li>
+                                <span class="detail-icon">🎯</span>
+                                <span><strong>Level:</strong> Beginner Friendly</span>
+                            </li>
+                            <li>
+                                <span class="detail-icon">🎁</span>
+                                <span><strong>Includes:</strong> Materials & Take-home Kit</span>
+                            </li>
+                            <li>
+                                <span class="detail-icon">📍</span>
+                                <span><strong>Location:</strong> Ahmedabad</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-book-workshop">
+                            Book This Workshop
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Corporate Workshops -->
+{% if corporate_workshops %}
+<section class="workshops-section">
+    <div class="container">
+        <div class="category-header">
+            <h2>🏢 Corporate Workshops</h2>
+            <p>Team building and wellness programs for organizations</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for workshop in corporate_workshops %}
+            <div class="col-md-6">
+                <div class="workshop-card">
+                    {% if 'Team Building' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=800&q=80" alt="Team Building Activities" class="workshop-image">
+                    {% elif 'Wellness' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1463620695885-8a91d87c53d0?w=800&q=80" alt="Office Wellness Program" class="workshop-image">
+                    {% elif 'Leadership' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80" alt="Leadership Development" class="workshop-image">
+                    {% elif 'Festival' in workshop.name %}
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80" alt="Festival Celebration" class="workshop-image">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80" alt="{{ workshop.name }}" class="workshop-image">
+                    {% endif %}
+                    <div class="workshop-header corporate">
+                        <h3>{{ workshop.name }}</h3>
+                        <div class="workshop-duration">⏱️ {{ workshop.duration }}</div>
+                    </div>
+                    <div class="workshop-body corporate">
+                        <div class="workshop-price">
+                            <div class="price-per-person">₹{{ workshop.price_per_person|floatformat:0 }}</div>
+                            <div class="price-label">per person</div>
+                        </div>
+                        
+                        <div class="group-size">
+                            <strong>👥 Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
+                        </div>
+                        
+                        <p class="workshop-description">{{ workshop.description }}</p>
+                        
+                        <ul class="workshop-details">
+                            <li>
+                                <span class="detail-icon">🎯</span>
+                                <span><strong>Best For:</strong> Corporate Teams</span>
+                            </li>
+                            <li>
+                                <span class="detail-icon">🎁</span>
+                                <span><strong>Includes:</strong> All Materials & Refreshments</span>
+                            </li>
+                            <li>
+                                <span class="detail-icon">📍</span>
+                                <span><strong>Location:</strong> Your Office or Our Venue</span>
+                            </li>
+                            <li>
+                                <span class="detail-icon">💼</span>
+                                <span><strong>Custom:</strong> Tailored to Your Team</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_request' %}" class="btn btn-book-workshop corporate">
+                            Request Corporate Booking
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Benefits Section -->
+<section class="container">
+    <div class="benefits-section">
+        <h2>🌟 Why Join Our Workshops?</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <div class="benefit-icon">👨‍🏫</div>
+                    <div>
+                        <h5>Expert Instructors</h5>
+                        <p>Learn from experienced horticulturists and gardening professionals</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🛠️</div>
+                    <div>
+                        <h5>Hands-on Learning</h5>
+                        <p>Practice techniques and get immediate feedback</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎁</div>
+                    <div>
+                        <h5>Take-home Kits</h5>
+                        <p>Continue practicing at home with provided materials</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <div class="benefit-icon">👥</div>
+                    <div>
+                        <h5>Community</h5>
+                        <p>Connect with like-minded gardening enthusiasts</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📚</div>
+                    <div>
+                        <h5>Resources</h5>
+                        <p>Receive guides, tips, and ongoing support</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🏆</div>
+                    <div>
+                        <h5>Certificate</h5>
+                        <p>Get a participation certificate for select workshops</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Need a Custom Workshop for Your Group?</h2>
+        <p class="lead mb-4">We can design specialized workshops for schools, communities, and organizations</p>
+        <a href="{% url 'shop:service_request' %}" class="btn btn-cta">
+            📞 Request Custom Workshop
+        </a>
+    </div>
+</section>
+
+<!-- Back to Services -->
+<div class="container my-5">
+    <div class="text-center">
+        <a href="{% url 'shop:services' %}" class="btn btn-lg btn-outline-secondary">
+            ← Back to All Services
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Interactive workshop card effects
+document.querySelectorAll('.workshop-card').forEach(card => {
+    // Click effect
+    card.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') return;
+        
+        // Create ripple effect
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(245, 87, 108, 0.4);
+            width: 20px;
+            height: 20px;
+            left: ${x}px;
+            top: ${y}px;
+            transform: translate(-50%, -50%) scale(0);
+            animation: workshop-ripple 0.8s ease-out;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        
+        this.style.position = 'relative';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 800);
+    });
+    
+    // Tilt effect on mouse move
+    card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        this.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+    });
+});
+
+// Add ripple animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes workshop-ripple {
+        to {
+            transform: translate(-50%, -50%) scale(40);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Benefit items hover effect
+document.querySelectorAll('.benefit-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        this.querySelector('.benefit-icon').style.transform = 'scale(1.3) rotate(10deg)';
+    });
+    
+    item.addEventListener('mouseleave', function() {
+        this.querySelector('.benefit-icon').style.transform = 'scale(1) rotate(0deg)';
+    });
+});
+
+// Book button interactive effects
+document.querySelectorAll('.btn-book-workshop').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        // Add particle effect
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    background: white;
+                    border-radius: 50%;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    animation: particle-burst 0.8s ease-out forwards;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }, i * 50);
+        }
+    });
+});
+
+// Add particle animation
+const particleStyle = document.createElement('style');
+particleStyle.textContent = `
+    @keyframes particle-burst {
+        to {
+            transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(particleStyle);
+</script>
+{% endblock %}

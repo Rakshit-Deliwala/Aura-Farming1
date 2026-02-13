@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="section-title h4 mb-4">Checkout</h2>
+<div class="row">
+    <div class="col-md-7 mb-4">
+        <form method="post" action="{% url 'shop:checkout' %}">
+            {% csrf_token %}
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h6 class="card-title mb-3">Shipping Details (Indian address)</h6>
+                    <div class="mb-2">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" name="name" class="form-control" value="{{ form.name.value|default:'' }}" required maxlength="200">
+                        {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Phone *</label>
+                        <input type="text" name="phone" class="form-control" value="{{ form.phone.value|default:'' }}" required maxlength="20" placeholder="e.g. +91-9876543210">
+                        {% if form.phone.errors %}<div class="text-danger small">{{ form.phone.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Address Line 1 *</label>
+                        <input type="text" name="address_line1" class="form-control" value="{{ form.address_line1.value|default:'' }}" required maxlength="255" placeholder="House/Flat no., Building, Street">
+                        {% if form.address_line1.errors %}<div class="text-danger small">{{ form.address_line1.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Address Line 2 (optional)</label>
+                        <input type="text" name="address_line2" class="form-control" value="{{ form.address_line2.value|default:'' }}" maxlength="255" placeholder="Landmark, Area">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label">City *</label>
+                            <input type="text" name="city" class="form-control" value="{{ form.city.value|default:'Bengaluru' }}" required maxlength="100">
+                            {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label">State *</label>
+                            <input type="text" name="state" class="form-control" value="{{ form.state.value|default:'Karnataka' }}" required maxlength="100">
+                            {% if form.state.errors %}<div class="text-danger small">{{ form.state.errors.0 }}</div>{% endif %}
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label">Pincode *</label>
+                            <input type="text" name="pincode" class="form-control" value="{{ form.pincode.value|default:'560001' }}" required maxlength="10">
+                            {% if form.pincode.errors %}<div class="text-danger small">{{ form.pincode.errors.0 }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Payment Method</label>
+                        <select name="payment_method" class="form-select">
+                            <option value="COD" {% if form.payment_method.value == 'COD' %}selected{% endif %}>Cash on Delivery (COD)</option>
+                            <option value="UPI" {% if form.payment_method.value == 'UPI' %}selected{% endif %}>UPI (Coming Soon)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Place Order – ₹{{ total_amount }}</button>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title mb-3">Order Summary</h6>
+                <ul class="list-unstyled small mb-3">
+                    {% for item in items %}
+                        <li class="d-flex justify-content-between mb-2">
+                            <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                            <span>₹{{ item.line_total }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <p class="d-flex justify-content-between mb-0 fw-bold">
+                    <span>Total</span>
+                    <span>₹{{ total_amount }}</span>
+                </p>
+                <p class="small text-muted mt-2 mb-0">
+                    Shipping & COD charges as per policy. We will call you to confirm before dispatch.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

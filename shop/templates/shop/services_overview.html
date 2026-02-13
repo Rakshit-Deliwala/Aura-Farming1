@@ -1,0 +1,987 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Professional Gardening Services | AURA FARMING{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(5, 65, 120, 0.55) 0%, rgba(8, 105, 150, 0.55) 30%, rgba(5, 150, 105, 0.55) 70%, rgba(4, 120, 87, 0.55) 100%),
+                    url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1600&q=80') center/cover;
+        color: white;
+        padding: 120px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        min-height: 70vh;
+    }
+    
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        background: linear-gradient(to bottom, transparent, rgba(251, 191, 36, 0.15));
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 25% 25%, rgba(251, 191, 36, 0.2) 0%, transparent 35%),
+                    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+                    radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+        animation: float-background 15s ease-in-out infinite;
+        opacity: 0.8;
+    }
+    
+    @keyframes float-background {
+        0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+        33% { transform: translate(-20px, -10px) rotate(1deg); }
+        66% { transform: translate(10px, -15px) rotate(-1deg); }
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-section h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-shadow: 3px 3px 15px rgba(0,0,0,0.4), 0 0 30px rgba(251, 191, 36, 0.3);
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #ffffff 0%, #fbbf24 70%, #ffffff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: text-glow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes text-glow {
+        0% { text-shadow: 3px 3px 15px rgba(0,0,0,0.4), 0 0 20px rgba(251, 191, 36, 0.3); }
+        100% { text-shadow: 3px 3px 15px rgba(0,0,0,0.4), 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    
+    .hero-section .subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+    
+    .hero-section p {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        opacity: 0.85;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+        position: relative;
+        padding: 2rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .stat-number {
+        font-size: 2.8rem;
+        font-weight: bold;
+        display: block;
+        background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #fbbf24 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+        animation: number-pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes number-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    .stat-label {
+        font-size: 0.95rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .category-section {
+        padding: 60px 0;
+        position: relative;
+    }
+    
+    .category-section:nth-child(even) {
+        background: #f8f9fa;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title {
+        position: relative;
+        padding-bottom: 20px;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981, #059669);
+        border-radius: 2px;
+    }
+    
+    .section-title h2 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #1a202c;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+    
+    .section-title p {
+        font-size: 1.2rem;
+        color: #718096;
+        font-weight: 300;
+    }
+    
+    .service-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 0;
+    }
+    
+    .service-card:hover::before {
+        opacity: 1;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        border-color: #10b981;
+    }
+    
+    .service-card:active {
+        transform: translateY(-12px) scale(1.01);
+    }
+    
+    .service-card-header {
+        background: linear-gradient(135deg, 
+                    rgba(5, 65, 120, 0.55) 0%, 
+                    rgba(8, 105, 150, 0.55) 30%, 
+                    rgba(5, 150, 105, 0.55) 70%, 
+                    rgba(16, 185, 129, 0.55) 100%);
+        color: white;
+        padding: 35px 25px;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        text-align: center;
+    }
+    
+    .service-card-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        animation: rotate-gradient 10s linear infinite;
+    }
+    
+    @keyframes rotate-gradient {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .service-card-header .icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+    
+    .plan-code {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255,255,255,0.2);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+    
+    .service-card-header h3 {
+        font-size: 1.9rem;
+        margin-bottom: 0.8rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+        text-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+        font-style: italic;
+    }
+    
+    .service-card-header .tagline {
+        font-size: 1.05rem;
+        opacity: 0.95;
+        font-weight: 300;
+        position: relative;
+        color: #e0f2e9;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        z-index: 1;
+    }
+    
+    .service-card-body {
+        padding: 25px;
+    }
+    
+    .price-section {
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+         padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        text-align: center;
+        border: 2px solid #e2e8f0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .price-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .service-card:hover .price-section::before {
+        left: 100%;
+    }
+    
+    .price {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #5f72bd;
+        line-height: 1.3;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .price-section small {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .specs-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+    
+    .specs-list li {
+        padding: 10px 0;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .btn-view-details {
+        background: linear-gradient(135deg, #4F46E5, #7C3AED);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    .btn-view-details::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+        z-index: -1;
+    }
+    
+    .btn-view-details:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+    
+    .btn-view-details:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .btn-view-details:active {
+        transform: translateY(2px);
+    }
+    
+    .spec-value {
+        color: #718096;
+        font-weight: 600;
+        cursor: pointer;
+        border-left: 4px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .maintenance-card, .workshop-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+        border-left: 5px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .maintenance-card::before, .workshop-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+        transform: scaleY(0);
+        transition: transform 0.4s ease;
+    }
+    
+    .maintenance-card:hover, .workshop-card:hover {
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2);
+        transform: translateX(12px) scale(1.02);
+        border-left-color: #10b981;
+    }
+    
+    .maintenance-card:hover::before, .workshop-card:hover::before {
+        transform: scaleY(1);
+    }
+    
+    .badge-period {
+        background: linear-gradient(135deg, #5f72bd 0%, #9921e8 100%);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 3px 10px rgba(95, 114, 189, 0.3);
+    }
+    
+    .badge-savings {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1440 320\"><path fill=\"%234ade80\" fill-opacity=\"0.1\" d=\"M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z\"></path></svg>') no-repeat bottom;
+        background-size: cover;
+    }
+    
+    .cta-section h2 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .cta-section p {
+        position: relative;
+        z-index: 1;
+        font-size: 1.2rem;
+    }
+    
+    .btn-cta {
+        background: linear-gradient(135deg, #4ade80 0%, #10b981 100%);
+        color: white;
+        padding: 18px 45px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        border: none;
+        transition: all 0.4s ease;
+        box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4);
+        position: relative;
+        z-index: 1;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .btn-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(74, 222, 128, 0.5);
+        color: white;
+    }
+    
+    .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-cta {
+        background: white;
+        color: #f5576c;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-cta:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    
+    .featured-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        z-index: 10;
+        animation: pulse-glow 2s infinite;
+    }
+    
+    @keyframes pulse-glow {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(246, 173, 85, 0.7);
+        }
+        50% {
+            box-shadow: 0 0 0 10px rgba(246, 173, 85, 0);
+        }
+    }
+    
+    /* Fade-in animations on scroll */
+    .service-card, .maintenance-card, .workshop-card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .service-card:nth-child(1) { animation-delay: 0.1s; }
+    .service-card:nth-child(2) { animation-delay: 0.2s; }
+    .service-card:nth-child(3) { animation-delay: 0.3s; }
+    .maintenance-card:nth-child(1) { animation-delay: 0.1s; }
+    .maintenance-card:nth-child(2) { animation-delay: 0.2s; }
+    .maintenance-card:nth-child(3) { animation-delay: 0.3s; }
+    .workshop-card:nth-child(1) { animation-delay: 0.1s; }
+    .workshop-card:nth-child(2) { animation-delay: 0.2s; }
+    .workshop-card:nth-child(3) { animation-delay: 0.3s; }
+    .workshop-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>🌱 Transform Your Space with Professional Gardening</h1>
+        <p class="subtitle">From Balconies to Corporate Campuses - We Bring Nature to You</p>
+        <p>Expert consultation • Premium materials • Ongoing support • Proven results</p>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">5,000+</span>
+                <span class="stat-label">Happy Customers</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">200+</span>
+                <span class="stat-label">Gardens Created</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Workshops Conducted</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Satisfaction Rate</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Residential Solutions -->
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <span class="section-icon">🏡</span>
+            <h2>Residential Solutions</h2>
+            <p>Transform your home into a green sanctuary</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for plan in residential %}
+            <div class="col-md-4">
+                <div class="service-card">
+                    {% if plan.plan_code == 'A1' %}
+                    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80" alt="Balcony Garden Setup" class="service-card-image">
+                    {% elif plan.plan_code == 'A2' %}
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80" alt="Terrace Garden Design" class="service-card-image">
+                    {% elif plan.plan_code == 'A3' %}
+                    <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80" alt="Vertical Garden Wall" class="service-card-image">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80" alt="Home Garden" class="service-card-image">
+                    {% endif %}
+                    {% if plan.is_featured %}
+                    <span class="featured-badge">⭐ Best Seller</span>
+                    {% endif %}
+                    <div class="service-card-header">
+                        <span class="icon">🌿</span>
+                        <span class="plan-code">{{ plan.plan_code }}</span>
+                        <h3>{{ plan.name }}</h3>
+                        <p class="tagline">{{ plan.tagline }}</p>
+                    </div>
+                    <div class="service-card-body">
+                        <div class="price-section">
+                            {% if plan.price_max_inr %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }} - ₹{{ plan.price_max_inr|floatformat:0 }}</div>
+                            {% else %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            {% endif %}
+                            <small class="text-muted">One-time setup fee</small>
+                        </div>
+                        
+                        <ul class="specs-list">
+                            <li>
+                                <span class="spec-label">📏 Coverage</span>
+                                <span class="spec-value">{{ plan.space_coverage }}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">⏱️ Setup Time</span>
+                                <span class="spec-value">{{ plan.setup_time }}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">✅ Warranty</span>
+                                <span class="spec-value">{{ plan.warranty }}</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_plan_detail' plan.plan_code %}" class="btn btn-view-details">
+                            View Full Details →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Corporate Solutions -->
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>🏢 Corporate & Commercial</h2>
+            <p>Offices, Hotels, Schools & More</p>
+        </div>
+        
+<!-- Corporate Solutions -->
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <span class="section-icon">🏢</span>
+            <h2>Corporate & Commercial</h2>
+            <p>Elevate your workspace with professional greenery</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for plan in corporate %}
+            <div class="col-md-4">
+                <div class="service-card">
+                    {% if plan.plan_code == 'B1' %}
+                    <img src="https://images.unsplash.com/photo-1463620695885-8a91d87c53d0?w=800&q=80" alt="Office Interior Plants" class="service-card-image">
+                    {% elif plan.plan_code == 'B2' %}
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80" alt="Corporate Building Landscape" class="service-card-image">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=800&q=80" alt="Commercial Green Space" class="service-card-image">
+                    {% endif %}
+                    <div class="service-card-header">
+                        <span class="icon">🌿</span>
+                        <span class="plan-code">{{ plan.plan_code }}</span>
+                        <h3>{{ plan.name }}</h3>
+                        <p class="tagline">{{ plan.tagline }}</p>
+                    </div>
+                    <div class="service-card-body">
+                        <div class="price-section">
+                            {% if plan.price_max_inr %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }} - ₹{{ plan.price_max_inr|floatformat:0 }}</div>
+                            {% else %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            {% endif %}
+                            <small class="text-muted">Project-based pricing</small>
+                        </div>
+                        
+                        <ul class="specs-list">
+                            <li>
+                                <span class="spec-label">📏 Coverage</span>
+                                <span class="spec-value">{{ plan.space_coverage }}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">⏱️ Setup Time</span>
+                                <span class="spec-value">{{ plan.setup_time }}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">✅ Support</span>
+                                <span class="spec-value">{{ plan.warranty|truncatewords:5 }}</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'shop:service_plan_detail' plan.plan_code %}" class="btn btn-view-details">
+                            View Full Details →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Institutional & Government -->
+{% if institutional %}
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <span class="section-icon">🏛️</span>
+            <h2>Institutional & Government</h2>
+            <p>Large-scale green infrastructure and urban forestry</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for plan in institutional %}
+            <div class="col-md-6">
+                <div class="service-card">
+                    {% if plan.plan_code == 'C1' %}
+                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80" alt="Public Park Landscaping" class="service-card-image">
+                    {% elif plan.plan_code == 'C2' %}
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Government Building Greenery" class="service-card-image">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80" alt="Institutional Gardens" class="service-card-image">
+                    {% endif %}
+                    <div class="service-card-header">
+                        <span class="icon">🌳</span>
+                        <span class="plan-code">{{ plan.plan_code }}</span>
+                        <h3>{{ plan.name }}</h3>
+                        <p class="tagline">{{ plan.tagline }}</p>
+                    </div>
+                    <div class="service-card-body">
+                        <div class="price-section">
+                            {% if plan.price_max_inr %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }} - ₹{{ plan.price_max_inr|floatformat:0 }}</div>
+                            {% else %}
+                            <div class="price">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            {% endif %}
+                            <small class="text-muted">Project-based pricing</small>
+                        </div>
+                        
+                        <p class="text-muted mb-3">{{ plan.description|truncatewords:20 }}</p>
+                        
+                        <a href="{% url 'shop:service_plan_detail' plan.plan_code %}" class="btn btn-view-details">
+                            View Full Details →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Maintenance Plans -->
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>🔧 Maintenance Plans</h2>
+            <p>Keep Your Garden Thriving Year-Round</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                {% for plan in maintenance_plans|slice:":3" %}
+                <div class="maintenance-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0">{{ plan.name }}</h4>
+                        <div>
+                            <span class="badge-period">{{ plan.get_billing_period_display }}</span>
+                            {% if plan.savings_percentage > 0 %}
+                            <span class="badge-savings ms-2">Save {{ plan.savings_percentage }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="text-primary mb-0">₹{{ plan.price_inr|floatformat:0 }}</h3>
+                            <small class="text-muted">{{ plan.visit_frequency }} visits</small>
+                        </div>
+                        <a href="{% url 'shop:maintenance_plans' %}" class="btn btn-outline-primary">
+                            Compare Plans →
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="text-center mt-3">
+                    <a href="{% url 'shop:maintenance_plans' %}" class="btn btn-lg btn-primary">
+                        View All Maintenance Plans
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Workshops -->
+<section class="category-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>🎓 Workshops & Events</h2>
+            <p>Learn, Grow & Connect with Nature</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for workshop in workshops|slice:":4" %}
+            <div class="col-md-6">
+                <div class="workshop-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="mb-0">{{ workshop.name }}</h5>
+                        <span class="badge bg-info">{{ workshop.get_event_type_display }}</span>
+                    </div>
+                    <p class="text-muted mb-2">{{ workshop.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong class="text-success">₹{{ workshop.price_per_person }}</strong> /person
+                            <small class="text-muted d-block">{{ workshop.duration }}</small>
+                        </div>
+                        <small class="text-muted">
+                            {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'shop:workshops' %}" class="btn btn-lg btn-primary">
+                View All Workshops
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <h2>🌿 Ready to Create Your Dream Garden?</h2>
+        <p class="lead mb-4">Get a free consultation with our expert horticulturists today</p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'shop:service_request' %}" class="btn btn-cta">
+                📞 Free Consultation
+            </a>
+            <a href="tel:+918866080372" class="btn btn-cta" style="background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%); color: #1a202c;">
+                💬 Call Now
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add click effect ripple to cards
+document.querySelectorAll('.service-card, .maintenance-card, .workshop-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') return;
+        
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const ripple = document.createElement('span');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.3);
+            width: 20px;
+            height: 20px;
+            left: ${x}px;
+            top: ${y}px;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple-effect 0.6s ease-out;
+            pointer-events: none;
+        `;
+        
+        this.style.position = 'relative';
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    });
+});
+
+// Add CSS for ripple animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple-effect {
+        to {
+            transform: translate(-50%, -50%) scale(30);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Smooth scroll for navigation
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Add hover sound effect (optional - can be enabled)
+// Uncomment the following to add subtle feedback
+/*
+const hoverSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOP6fn7rdkHA==');
+document.querySelectorAll('.service-card, .btn-view-details').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        hoverSound.currentTime = 0;
+        hoverSound.play().catch(() => {});
+    });
+});
+*/
+</script>
+{% endblock %}
