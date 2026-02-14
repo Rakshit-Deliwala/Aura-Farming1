@@ -1259,7 +1259,7 @@
                         </div>
                         
                         <div class="plan-price">
-                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="amount">{{ plan.price_inr|floatformat:0 }}</div>
                             <div class="period">per {{ plan.billing_period }}</div>
                             {% if plan.savings_percentage > 0 %}
                             <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
@@ -1272,7 +1272,7 @@
                         </div>
                         
                         <div class="response-time">
-                            🚨 {{ plan.response_time }}
+                            {{ plan.response_time }}
                         </div>
                         
                         <ul class="service-list">
@@ -1286,9 +1286,9 @@
                                     {% if service.frequency == 'Weekly' %}
                                         <span class="frequency-badge frequency-weekly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Monthly' %}
-                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Quarterly' %}
-                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-quarterly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Annual' %}
                                         <span class="frequency-badge frequency-annual">{{ service.frequency }}</span>
                                     {% else %}
@@ -1337,7 +1337,7 @@
                         </div>
                         
                         <div class="plan-price">
-                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="amount">{{ plan.price_inr|floatformat:0 }}</div>
                             <div class="period">per {{ plan.billing_period }}</div>
                             {% if plan.savings_percentage > 0 %}
                             <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
@@ -1350,7 +1350,7 @@
                         </div>
                         
                         <div class="response-time">
-                            🚨 {{ plan.response_time }}
+                            {{ plan.response_time }}
                         </div>
                         
                         <ul class="service-list">
@@ -1364,9 +1364,9 @@
                                     {% if service.frequency == 'Weekly' %}
                                         <span class="frequency-badge frequency-weekly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Monthly' %}
-                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Quarterly' %}
-                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-quarterly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Annual' %}
                                         <span class="frequency-badge frequency-annual">{{ service.frequency }}</span>
                                     {% else %}
@@ -1413,7 +1413,7 @@
                         </div>
                         
                         <div class="plan-price">
-                            <div class="amount">₹{{ plan.price_inr|floatformat:0 }}</div>
+                            <div class="amount">{{ plan.price_inr|floatformat:0 }}</div>
                             <div class="period">per {{ plan.billing_period }}</div>
                             {% if plan.savings_percentage > 0 %}
                             <span class="savings-badge">Save {{ plan.savings_percentage }}%</span>
@@ -1426,7 +1426,7 @@
                         </div>
                         
                         <div class="response-time">
-                            🚨 {{ plan.response_time }}
+                            {{ plan.response_time }}
                         </div>
                         
                         <ul class="service-list">
@@ -1440,9 +1440,9 @@
                                     {% if service.frequency == 'Weekly' %}
                                         <span class="frequency-badge frequency-weekly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Monthly' %}
-                                        <span class="frequency-badge frequency-monthly">📅 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-monthly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Quarterly' %}
-                                        <span class="frequency-badge frequency-quarterly">📆 {{ service.frequency }}</span>
+                                        <span class="frequency-badge frequency-quarterly">{{ service.frequency }}</span>
                                     {% elif service.frequency == 'Annual' %}
                                         <span class="frequency-badge frequency-annual">{{ service.frequency }}</span>
                                     {% else %}
@@ -1472,7 +1472,7 @@
         <h2>Need a Custom Maintenance Plan?</h2>
         <p class="lead mb-4">We can create a tailored maintenance solution for your unique requirements</p>
         <a href="{% url 'shop:service_request' %}" class="btn btn-cta">
-            📞 Request Custom Quote
+            Request Custom Quote
         </a>
     </div>
 </section>

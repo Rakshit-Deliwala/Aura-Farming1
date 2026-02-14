@@ -346,8 +346,8 @@
                 {% if product.is_kit or product.is_gift or product.stock <= 5 and product.stock > 0 %}
                 <div class="image-badge">
                     {% if product.is_kit %}<span class="badge-kit">🧰 Kit</span>{% endif %}
-                    {% if product.is_gift %}<span class="badge-gift">🎁 Gift</span>{% endif %}
-                    {% if product.stock <= 5 and product.stock > 0 %}<span class="badge-stock-low">🔥 Few Left</span>{% endif %}
+                    {% if product.is_gift %}<span class="badge-gift">Gift</span>{% endif %}
+                    {% if product.stock <= 5 and product.stock > 0 %}<span class="badge-stock-low">Few Left</span>{% endif %}
                 </div>
                 {% endif %}
                 {% if product.image_url %}
@@ -356,7 +356,7 @@
                     <img src="{{ product.image.url }}" alt="{{ product.name }}">
                 {% else %}
                     <div class="placeholder-image-large">
-                        <span>🌿 AURA FARMING</span>
+                        <span>AURA FARMING</span>
                     </div>
                 {% endif %}
             </div>
@@ -367,10 +367,10 @@
     <div class="col-md-7 mb-4">
         <div class="product-info">
             <span class="product-category-tag">
-                {% if product.category_type == 'tools' %}🔧 Tools
+                {% if product.category_type == 'tools' %}Tools
                 {% elif product.category_type == 'kits' %}🧰 Kits
-                {% elif product.category_type == 'soil' %}🌱 Soil & Media
-                {% else %}🎁 Gifts
+                {% elif product.category_type == 'soil' %}Soil & Media
+                {% else %}Gifts
                 {% endif %}
             </span>
             

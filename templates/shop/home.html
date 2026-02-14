@@ -498,7 +498,7 @@
     }
     
     .services-section::before {
-        content: '🌿';
+        content: '';
         position: absolute;
         top: -100px;
         right: -100px;
@@ -857,14 +857,14 @@
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="service-box">
-                    <h4>🌳 Complete Garden Setup</h4>
+                    <h4>Complete Garden Setup</h4>
                     <p>Transform your balcony or terrace into a lush garden paradise. Professional design, installation, and maintenance plans.</p>
                     <a href="{% url 'shop:service_request' %}" class="btn-service">Request Setup</a>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="service-box">
-                    <h4>🎓 Gardening Workshops</h4>
+                    <h4>Gardening Workshops</h4>
                     <p>Learn from experts through hands-on workshops. Kitchen gardening, bonsai making, terrarium creation, and more.</p>
                     <a href="{% url 'shop:workshops' %}" class="btn-service">View Workshops</a>
                 </div>
@@ -925,7 +925,7 @@
                         <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
                         {% else %}
                         <div style="height: 250px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 3rem; opacity: 0.3;">🔧</span>
+                            <span style="font-size: 3rem; opacity: 0.3;"></span>
                         </div>
                         {% endif %}
                     </div>

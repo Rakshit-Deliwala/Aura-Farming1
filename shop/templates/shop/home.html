@@ -433,7 +433,7 @@
     }
     
     .services-section::before {
-        content: '🌿';
+        content: '';
         position: absolute;
         top: -100px;
         right: -100px;
@@ -582,28 +582,28 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon">🌱</div>
+                    <div class="feature-icon"></div>
                     <h4>Complete Toolkits</h4>
                     <p>Premium gardening tools and DIY kits designed for beginners and experts. Everything you need to start growing today.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon">🌿</div>
+                    <div class="feature-icon"></div>
                     <h4>Organic Products</h4>
                     <p>100% organic soil, fertilizers, and potting mixes. Chemical-free, eco-friendly solutions for healthier plants.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon">🎁</div>
+                    <div class="feature-icon"></div>
                     <h4>Eco-Friendly Gifts</h4>
                     <p>Sustainable gift hampers perfect for festivals and corporate gifting. Plantable seeds and unique garden boxes.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="feature-icon">🏡</div>
+                    <div class="feature-icon"></div>
                     <h4>Garden Setup</h4>
                     <p>End-to-end balcony and terrace garden setup service. Professional installation with 30-day support.</p>
                 </div>
@@ -642,7 +642,7 @@
                     <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
                     {% else %}
                     <div style="height: 250px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); display: flex; align-items: center; justify-content: center;">
-                        <span style="font-size: 3rem; opacity: 0.3;">🌱</span>
+                        <span style="font-size: 3rem; opacity: 0.3;"></span>
                     </div>
                     {% endif %}
                     <div class="product-body">
@@ -681,14 +681,14 @@
         <div class="row g-4">
             <div class="col-md-6">
                 <div class="service-box">
-                    <h4>🌳 Complete Garden Setup</h4>
+                    <h4>Complete Garden Setup</h4>
                     <p>Transform your balcony or terrace into a lush garden paradise. Professional design, installation, and maintenance plans.</p>
                     <a href="{% url 'shop:service_request' %}" class="btn-service">Request Setup</a>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="service-box">
-                    <h4>🎓 Gardening Workshops</h4>
+                    <h4>Gardening Workshops</h4>
                     <p>Learn from experts through hands-on workshops. Kitchen gardening, bonsai making, terrarium creation, and more.</p>
                     <a href="{% url 'shop:workshops' %}" class="btn-service">View Workshops</a>
                 </div>
@@ -746,14 +746,14 @@
                     <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
                     {% else %}
                     <div style="height: 250px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); display: flex; align-items: center; justify-content: center;">
-                        <span style="font-size: 3rem; opacity: 0.3;">🔧</span>
+                        <span style="font-size: 3rem; opacity: 0.3;"></span>
                     </div>
                     {% endif %}
                     <div class="product-body">
                         <h6>{{ product.name }}</h6>
                         <div class="product-footer">
                             <span class="price">₹{{ product.price_inr }}</span>
-                            <a href="{% url 'shop:product_detail' product.id }}" class="btn-add-cart">View Details</a>
+                            <a href="{% url 'shop:product_detail' product.id %}" class="btn-add-cart">View Details</a>
                         </div>
                     </div>
                 </div>
