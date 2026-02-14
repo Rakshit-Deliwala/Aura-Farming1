@@ -383,19 +383,19 @@
                 <h3>📐 Specifications</h3>
                 {% if plan.space_coverage %}
                 <div class="spec-row">
-                    <span class="spec-label">📏 Space Coverage</span>
+                    <span class="spec-label">Space Coverage</span>
                     <span class="spec-value">{{ plan.space_coverage }}</span>
                 </div>
                 {% endif %}
                 {% if plan.setup_time %}
                 <div class="spec-row">
-                    <span class="spec-label">⏱️ Setup Time</span>
+                    <span class="spec-label">Setup Time</span>
                     <span class="spec-value">{{ plan.setup_time }}</span>
                 </div>
                 {% endif %}
                 {% if plan.warranty %}
                 <div class="spec-row">
-                    <span class="spec-label">✅ Warranty/Support</span>
+                    <span class="spec-label">Warranty/Support</span>
                     <span class="spec-value">{{ plan.warranty }}</span>
                 </div>
                 {% endif %}
@@ -430,7 +430,7 @@
             <!-- Suitable Plants -->
             {% if plan.suitable_plants %}
             <div class="plants-section">
-                <h3>🌱 Suitable Plants</h3>
+                <h3>Suitable Plants</h3>
                 <div>
                     {% for plant in plan.suitable_plants.split|slice:":20" %}
                     <span class="plant-tag">{{ plant|cut:"," }}</span>
@@ -442,7 +442,7 @@
             <!-- Ideal For -->
             {% if plan.ideal_for %}
             <div class="ideal-section">
-                <h3>👥 Ideal For</h3>
+                <h3>Ideal For</h3>
                 <div>
                     {% for item in plan.ideal_for.split|slice:":10" %}
                     <span class="ideal-tag">{{ item|cut:"," }}</span>
@@ -486,7 +486,7 @@
         <h3>Ready to Get Started?</h3>
         <p class="lead mb-4">Book your consultation today and transform your space into a green paradise!</p>
         <a href="{% url 'shop:service_request' %}" class="btn btn-book-now">
-            🌱 Book This Plan Now
+            Book This Plan Now
         </a>
     </div>
     

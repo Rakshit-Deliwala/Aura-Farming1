@@ -16,7 +16,7 @@
     }
     
     .workshops-hero::after {
-        content: '🎓';
+        content: '';
         position: absolute;
         top: 50%;
         right: -50px;
@@ -141,7 +141,7 @@
     }
     
     .workshop-header::after {
-        content: '🎓';
+        content: '';
         position: absolute;
         top: 50%;
         right: -20px;
@@ -162,7 +162,7 @@
     }
     
     .workshop-header.corporate::after {
-        content: '🏢';
+        content: '';
     }
     
     .workshop-header h3 {
@@ -206,10 +206,12 @@
     }
     
     .price-per-person {
-        font-size: 2.3rem;
-        font-weight: 800;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
         color: #92400e;
         text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
     }
     
     .workshop-body.corporate .price-per-person {
@@ -478,6 +480,83 @@
         scroll-behavior: smooth;
     }
 
+    /* Responsive Design */
+    @media (max-width: 991px) {
+        .workshop-card {
+            padding: 1.5rem;
+        }
+        .price-per-person {
+            font-size: 1.6rem;
+        }
+        .workshop-hero h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .workshop-card {
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .price-per-person {
+            font-size: 1.4rem;
+        }
+        .workshop-hero h1 {
+            font-size: 2rem;
+        }
+        .workshop-hero p {
+            font-size: 1rem;
+        }
+        .workshop-card h3 {
+            font-size: 1.2rem;
+        }
+        .group-size {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        .workshop-details span {
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .workshop-card {
+            padding: 1rem;
+        }
+        .price-per-person {
+            font-size: 1.2rem;
+        }
+        .workshop-hero h1 {
+            font-size: 1.6rem;
+        }
+        .workshop-hero p {
+            font-size: 0.9rem;
+        }
+        .workshop-card h3 {
+            font-size: 1.1rem;
+        }
+        .workshop-card p {
+            font-size: 0.85rem;
+        }
+        .price-label {
+            font-size: 0.8rem;
+        }
+        .group-size {
+            padding: 8px;
+            font-size: 0.85rem;
+        }
+        .workshop-details span {
+            font-size: 0.8rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+    }
+
 </style>
 {% endblock %}
 
@@ -485,7 +564,7 @@
 <!-- Hero Section -->
 <section class="workshops-hero">
     <div class="container">
-        <h1>🎓 Gardening Workshops & Events</h1>
+        <h1>Gardening Workshops & Events</h1>
         <p>Learn, Grow, and Connect with Fellow Garden Enthusiasts</p>
         <p class="lead">Hands-on Learning | Expert Guidance | Take-home Kits</p>
     </div>
@@ -496,7 +575,7 @@
 <section class="workshops-section">
     <div class="container">
         <div class="category-header">
-            <h2>🌸 Hobby Workshops</h2>
+            <h2>Hobby Workshops</h2>
             <p>Perfect for individuals and families who want to learn at their own pace</p>
         </div>
         
@@ -521,10 +600,10 @@
                     {% endif %}
                     <div class="workshop-header">
                         {% if forloop.counter == 1 %}
-                        <span class="popular-badge">🔥 POPULAR</span>
+                        <span class="popular-badge">POPULAR</span>
                         {% endif %}
                         <h3>{{ workshop.name }}</h3>
-                        <div class="workshop-duration">⏱️ {{ workshop.duration }}</div>
+                        <div class="workshop-duration">{{ workshop.duration }}</div>
                     </div>
                     <div class="workshop-body">
                         <div class="workshop-price">
@@ -533,22 +612,22 @@
                         </div>
                         
                         <div class="group-size">
-                            <strong>👥 Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
+                            <strong>Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
                         </div>
                         
                         <p class="workshop-description">{{ workshop.description }}</p>
                         
                         <ul class="workshop-details">
                             <li>
-                                <span class="detail-icon">🎯</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Level:</strong> Beginner Friendly</span>
                             </li>
                             <li>
-                                <span class="detail-icon">🎁</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Includes:</strong> Materials & Take-home Kit</span>
                             </li>
                             <li>
-                                <span class="detail-icon">📍</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Location:</strong> Ahmedabad</span>
                             </li>
                         </ul>
@@ -570,7 +649,7 @@
 <section class="workshops-section">
     <div class="container">
         <div class="category-header">
-            <h2>🏢 Corporate Workshops</h2>
+            <h2>Corporate Workshops</h2>
             <p>Team building and wellness programs for organizations</p>
         </div>
         
@@ -591,7 +670,7 @@
                     {% endif %}
                     <div class="workshop-header corporate">
                         <h3>{{ workshop.name }}</h3>
-                        <div class="workshop-duration">⏱️ {{ workshop.duration }}</div>
+                        <div class="workshop-duration">{{ workshop.duration }}</div>
                     </div>
                     <div class="workshop-body corporate">
                         <div class="workshop-price">
@@ -600,26 +679,26 @@
                         </div>
                         
                         <div class="group-size">
-                            <strong>👥 Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
+                            <strong>Group Size:</strong> {{ workshop.min_group_size }}-{{ workshop.max_group_size }} participants
                         </div>
                         
                         <p class="workshop-description">{{ workshop.description }}</p>
                         
                         <ul class="workshop-details">
                             <li>
-                                <span class="detail-icon">🎯</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Best For:</strong> Corporate Teams</span>
                             </li>
                             <li>
-                                <span class="detail-icon">🎁</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Includes:</strong> All Materials & Refreshments</span>
                             </li>
                             <li>
-                                <span class="detail-icon">📍</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Location:</strong> Your Office or Our Venue</span>
                             </li>
                             <li>
-                                <span class="detail-icon">💼</span>
+                                <span class="detail-icon"></span>
                                 <span><strong>Custom:</strong> Tailored to Your Team</span>
                             </li>
                         </ul>
@@ -643,21 +722,21 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="benefit-item">
-                    <div class="benefit-icon">👨‍🏫</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Expert Instructors</h5>
                         <p>Learn from experienced horticulturists and gardening professionals</p>
                     </div>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">🛠️</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Hands-on Learning</h5>
                         <p>Practice techniques and get immediate feedback</p>
                     </div>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">🎁</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Take-home Kits</h5>
                         <p>Continue practicing at home with provided materials</p>
@@ -666,21 +745,21 @@
             </div>
             <div class="col-md-6">
                 <div class="benefit-item">
-                    <div class="benefit-icon">👥</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Community</h5>
                         <p>Connect with like-minded gardening enthusiasts</p>
                     </div>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">📚</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Resources</h5>
                         <p>Receive guides, tips, and ongoing support</p>
                     </div>
                 </div>
                 <div class="benefit-item">
-                    <div class="benefit-icon">🏆</div>
+                    <div class="benefit-icon"></div>
                     <div>
                         <h5>Certificate</h5>
                         <p>Get a participation certificate for select workshops</p>
